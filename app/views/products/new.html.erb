@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Crear Producto</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+
+<style type="text/css">
+
+	.error {
+		background-color: #ff000091;
+		padding: 1em;
+		text-align: center;
+		color: #fff;
+		border-radius: 5px;
+		box-shadow: 5px 4px 15px #d8d8d8;
+		display: block;
+	}
+
+	input[type=submit] {
+	  width: 100%;
+	  background-color:#2364FE;
+	  color: white;
+	  padding: 14px 20px;
+	  margin: 8px 0;
+	  border: none;
+	  border-radius: 4px;
+	}
+</style>
+
+<body>
+	<div class="container">
+		<nav class="navbar navbar-expand-lg" style="margin-left: 10%">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="nav justify-content-center">
+        <li class="nav-item">
+              <%= link_to "Inicio", products_path, class:"nav-link"%>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Descargar Productos", products_path, class:"nav-link"%>
+            </li>
+            <li>
+                <%= link_to('Subir Archivos',  import_path, class:"nav-link")%>
+            </li>
+            <li>
+                <%= link_to('Cerrar Session',  destroy_user_session_path, :method => 'delete', class:"nav-link")%>
+            </li>
+        </ul>    
+
+      <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container" style="margin-top: 5%; text-align: center;">
+
+	  	<div>
+				<% if @product.errors.any? %>
+				<script type="text/javascript">
+					function hideError (e) {
+						document.getElementById('error').style.display = "none"
+					}
+				</script>
+				<p  id="error"class="error" onclick="hideError();">Error de Guardado</p>
+			 <% end %>
+		</div>
+
+		<%=form_with model: @products do |f| %>
+		<div class="form-group">
+					<%=label(f, "Nombre del Producto", {:class => "col-md-4 control-label"})%>
+					 <div class="col-md-6">
+						 <%= f.text_field :name, {:class => "form-control", required: true, style:"position: relative; left: 55%"} %>
+					 </div>
+		</div>
+		<div class="form-group">
+					<%=label(f, "Marca del Producto", :class => "col-md-4 control-label")%>
+					 <div class="col-md-6">
+						 <%= f.select(:brand , raw('<option value="Maxell">Maxell</option>
+						 														<option value="Esenses">Esenses</option>
+																				<option value="Genius">Genius</option>'), {required: true}, {:class => "form-control"} ) %>
+					 </div>
+		</div>
+		<div class="form-group">
+					<%=label(f, "Precio del Producto", {:class => "col-md-4 control-label"})%>
+					 <div class="col-md-6">
+						 <%= f.number_field :price, {:class => "form-control" , min: "0", required: true} %>
+					 </div>
+		</div>
+		<div class="form-group">
+					<%=label(f, "Cantidad del Producto", {:class => "col-md-4 control-label"})%>
+					 <div class="col-md-6">
+						 <%= f.number_field :quantity, {:class => "form-control" , min: "0", required: true} %>
+					 </div>
+		</div>
+		<div class="form-group">
+					 <div class="col-md-6">
+						 <%= f.submit value:"Guardar" %>
+					 </div>
+		</div>
+
+	</div>
+		<%end%>
+</body>
+</html>

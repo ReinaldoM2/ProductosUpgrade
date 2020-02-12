@@ -1,0 +1,70 @@
+<style type="text/css">
+
+	.error {
+		background-color: #ff000091;
+		padding: 1em;
+		text-align: center;
+		color: #fff;
+		border-radius: 5px;
+		box-shadow: 5px 4px 15px #d8d8d8;
+		display: block;
+	}
+
+	input[type=submit] {
+	  width: 100%;
+	  background-color:#2364FE;
+	  color: white;
+	  padding: 14px 20px;
+	  margin: 8px 0;
+	  border: none;
+	  border-radius: 4px;
+	}
+</style>
+
+<div class="container">
+		<div>
+			<% if @product.errors.any? %>
+			<script type="text/javascript">
+				function hideError (e) {
+					document.getElementById('error').style.display = "none"
+				}
+			</script>
+			<p  id="error"class="error" onclick="hideError();">Error de Guardado</p>
+		 <% end %>
+		</div>
+
+	<%=form_with model: @products do |f| %>
+	<div class="form-group">
+				<%=label(f, "Nombre del Producto", {:class => "col-md-4 control-label"})%>
+				 <div class="col-md-6">
+					 <%= f.text_field :name, {:class => "form-control", required: true} %>
+				 </div>
+	</div>
+	<div class="form-group">
+				<%=label(f, "Marca del Producto", :class => "col-md-4 control-label")%>
+				 <div class="col-md-6">
+					 <%= f.select(:brand , raw('<option value="Maxell">Maxell</option>
+					 														<option value="Esenses">Esenses</option>
+																			<option value="Genius">Genius</option>'), {required: true}, {:class => "form-control"} ) %>
+				 </div>
+	</div>
+	<div class="form-group">
+				<%=label(f, "Precio del Producto", {:class => "col-md-4 control-label"})%>
+				 <div class="col-md-6">
+					 <%= f.number_field :price, {:class => "form-control" , min: "0", required: true} %>
+				 </div>
+	</div>
+	<div class="form-group">
+				<%=label(f, "Cantidad del Producto", {:class => "col-md-4 control-label"})%>
+				 <div class="col-md-6">
+					 <%= f.number_field :quantity, {:class => "form-control" , min: "0", required: true} %>
+				 </div>
+	</div>
+	<div class="form-group">
+				 <div class="col-md-6">
+					 <%= f.submit value:"Guardar" %>
+				 </div>
+	</div>
+</div>
+
+<%end%>
