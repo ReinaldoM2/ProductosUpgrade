@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
+  before_action :get_brand
   def index
-  product = Product.all()
+  product = @brand.products
   render json: product
  end
 
@@ -16,9 +17,15 @@ class ProductsController < ApplicationController
 end
 
 def update
-	product = Product.find(params[:id]) 
-	product.update(product_params)
-	render json: product
+	begin
+		product = Product.find(params[:id]) 
+		product.update(product_params)
+		product.save!
+		render json: product
+	rescue Exception => e
+		raise
+	end
+
 end
 
 def destroy
@@ -38,8 +45,12 @@ end
 
  private
 
+ def get_brand
+ 	@brand = Brand.find(params[:brand_id])
+ end
+
  def product_params
- 	params.require(:product).permit(:name, :brand, :price, :quantity)
+ 	params.require(:product).permit(:name, :price, :quantity,:brand_id)
  end
 
 end

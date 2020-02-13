@@ -1,5 +1,5 @@
 class Brand < ApplicationRecord
-	belongs_to :product
+	has_many :products
   def self.import_from_file(file)
     spreadsheet = Roo::Spreadsheet.open file
       header = spreadsheet.row 1

@@ -38,7 +38,7 @@ end
  private
 
  def brand_params
- 	params.require(:brand).permit(:name)
+ 	params.require(:brand).permit(:name,:description,:contact)
  end
 
 end

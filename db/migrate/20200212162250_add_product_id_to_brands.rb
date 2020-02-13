@@ -1,6 +1,6 @@
 class AddProductIdToBrands < ActiveRecord::Migration[6.0]
   def change
-    add_reference :brands, :product, index: true
-    add_foreign_key :brands, :products
+    add_reference :products, :brand, index: true
+    add_foreign_key :products, :brands
   end
 end
