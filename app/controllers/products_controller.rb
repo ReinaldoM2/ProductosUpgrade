@@ -37,7 +37,7 @@ def update
 end
 
 def destroy
-	product = @brand.product.find(params[:id])
+	product = @brand.products.find(params[:id])
 	product.destroy
 	render json: product
 end

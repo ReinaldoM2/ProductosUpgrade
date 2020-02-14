@@ -1,7 +1,15 @@
 class BrandsController < ApplicationController
   def index
   brand = Brand.all()
-  render json: brand
+  brands_parsed = brand.map do |item| {
+  		name: item.name,
+  		description: item.description,
+  		contact: item.contact,
+  		image:  item.brand_image.attached? ? url_for(item.brand_image) : false,
+  		id: item.id
+  	}
+	end
+  render json: brands_parsed
  end
 
  def create
@@ -12,7 +20,13 @@ class BrandsController < ApplicationController
 
  def show
 	brand = Brand.find(params[:id])
-	render json: brand
+	render json: {
+		name: brand.name,
+		description: brand.description,
+		contact: brand.contact,
+		id: brand.id,
+		image: brand.brand_image.attached? ? url_for(brand.brand_image) : false
+	}
 end
 
 def update
@@ -38,7 +52,7 @@ end
  private
 
  def brand_params
- 	params.require(:brand).permit(:name,:description,:contact)
+ 	params.permit(:name,:description,:contact,:brand_image)
  end
 
 end
