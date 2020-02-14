@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :brand
+  has_one_attached :product_image
   def self.import_from_file(file)
     spreadsheet = Roo::Spreadsheet.open file
       header = spreadsheet.row 1

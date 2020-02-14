@@ -1,24 +1,32 @@
 class ProductsController < ApplicationController
   before_action :get_brand
   def index
-  product = @brand.products
-  render json: product
+  	product = @brand.products
+  	products_parsed = product.map do |item| {
+  		name: item.name,
+  		price: item.price,
+  		quantity: item.quantity,
+  		image:  item.product_image.attached? ? url_for(item.product_image) : false,
+  		id: item.id
+  	}
+	end
+  render json: products_parsed
  end
 
  def create
- 	product = Product.new(product_params)
+ 	product = @brand.product.new(product_params)
  	product.save
  	render json: product
  end
 
  def show
-	product = Product.find(params[:id])
+	product = @brand.products.find(params[:id])
 	render json: product
 end
 
 def update
 	begin
-		product = Product.find(params[:id]) 
+		product = @brand.products.find(params[:id]) 
 		product.update(product_params)
 		product.save!
 		render json: product
@@ -29,7 +37,7 @@ def update
 end
 
 def destroy
-	product = Product.find(params[:id])
+	product = @brand.product.find(params[:id])
 	product.destroy
 	render json: product
 end
@@ -50,7 +58,7 @@ end
  end
 
  def product_params
- 	params.require(:product).permit(:name, :price, :quantity,:brand_id)
+ 	params.permit(:name, :price, :quantity,:brand_id,:product_image)
  end
 
 end
