@@ -31,7 +31,7 @@ gem "roo"
 gem 'rack-cors', '~> 1.1', '>= 1.1.1'
 
 
-gem 'devise', '~> 4.7', '>= 4.7.1'
+gem 'devise'
 
 gem 'rolify', '~> 5.2'
 

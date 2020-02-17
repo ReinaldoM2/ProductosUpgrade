@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+
+	devise_for :users
  
+ post "/auth/facebook", to: 'social_auth#facebook_auth'
  resources :brands do
  	resources :products
  end
