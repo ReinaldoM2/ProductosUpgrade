@@ -4,7 +4,9 @@ Rails.application.routes.draw do
  
  post "/auth/facebook", to: 'social_auth#facebook_auth'
  resources :brands do
- 	resources :products
+ 	resources :products do
+ 		collection {post :import_from_file}
+ 	end
  end
  resources :brands do
 	  collection {post :import_from_file}
@@ -13,9 +15,7 @@ Rails.application.routes.draw do
  	get "/search_brand", to: 'brands#search_brand'
 
 
-  resources :products do
-	  collection {post :import_from_file}
-   end
+
     get "/import", to: 'products#import'
   	get "/search_product", to:'products#search_product'
 

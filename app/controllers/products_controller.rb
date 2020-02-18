@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
  end
 
  def create
- 	product = @brand.product.new(product_params)
+ 	product = @brand.products.new(product_params)
  	product.save
  	render json: product
  end
@@ -46,9 +46,8 @@ def import
 end
 
  def import_from_file
-   Product.import_from_file(params[:file])
+   @brand.products.import_from_file(params[:file])
    render json: { created: true }, status: :created
-   #redirect_to root_url, notice: "Datos Importados"
  end
 
  private
