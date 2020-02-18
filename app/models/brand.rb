@@ -12,8 +12,11 @@ class Brand < ApplicationRecord
         	brand.description = row["description"]
         	brand.contact = row["contact"]
         	brand.save!
-        	open(row["image"]) do |file|
-         	 brand.brand_image.attach(io: file, filename: 'jeje.jpg',  content_type: file.meta["content-type"])
+        	rege= /(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)/
+        	if row["image"] && rege.match(row["image"])
+	        	open(row["image"]) do |file|
+	         		brand.brand_image.attach(io: file, filename: 'jeje.jpg',  content_type: file.meta["content-type"])
+        		end
         	end
 		end
   end
